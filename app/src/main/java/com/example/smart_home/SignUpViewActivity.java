@@ -5,33 +5,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import okhttp3.OkHttpClient;
+
+public class SignUpViewActivity extends AppCompatActivity {
+
+    private TextView mTextViewResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.sign_up_view);
         configureSignUpButton();
+
+        mTextViewResult = findViewById(R.id.jsonReturn);
+
+    }
+
+
+    private void sigup_request(){
+        OkHttpClient client = new OkHttpClient();
+        String url = "192.168.0.203:8080/";
+
     }
 
 
     private void configureSignUpButton(){
-        Button singUpViewButton =(Button) findViewById(R.id.button_register);
+        Button singUpViewButton =(Button) findViewById(R.id.button_login_screen);
         singUpViewButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, SignUpViewActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
-
-
-
-
-
 }

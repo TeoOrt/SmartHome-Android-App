@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">smart_home</string>
+    <string name="logout">Log OUt</string>
+    <string name="hint_email">MobileProcessing@asu.edu</string>
+    <string name="hint_password">I_Love_ASSEMBLY</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="Create">Create Account !</string>
+    <string name="Email">Enter Email: </string>
+    <string name="Password">Enter Password: </string>
+    <string name="Submit">Submit Info </string>
+    <string name="LoginBack">Go Back to Login Page </string>
+
 </resources>
