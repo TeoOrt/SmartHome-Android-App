@@ -1,2 +1,4 @@
-package com.example.smart_home;public class ExpandableLists {
+package com.example.smart_home;
+
+public class ExpandableLists {
 }

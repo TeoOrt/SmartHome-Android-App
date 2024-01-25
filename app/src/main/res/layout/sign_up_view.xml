@@ -41,7 +41,7 @@
             android:id="@+id/email_title"
             />
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_email"
+            android:id="@+id/editEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,18 +73,21 @@
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+            app:layout_constraintTop_toBottomOf="@+id/editEmail" />
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_password"
+            android:id="@+id/editPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/cadet"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password_title">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:paddingTop="22dp"
+                android:textColor="@color/cream"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
@@ -99,14 +102,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-
             android:text="@string/Submit"
-            android:textColor="@color/cream"
-            app:backgroundTint="@color/cadet"
+            android:textColor="@color/gray"
+            app:backgroundTint="@color/white"
             app:cornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_password" />
+            app:layout_constraintTop_toBottomOf="@id/editPassword" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_login_screen"
@@ -124,20 +126,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alfa_slab_one"
-        android:lineSpacingExtra="10sp"
-        android:text="@string/Email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/cream"
-        android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:id="@+id/jsonReturn"
-        />
 
 </LinearLayout>

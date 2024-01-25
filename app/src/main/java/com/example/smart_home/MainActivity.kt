@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private fun configureSignUpButton() {
         val singUpViewButton = findViewById<View>(R.id.button_register) as Button
         singUpViewButton.setOnClickListener {
-            val intent = Intent(this@MainActivity, HomeActivity::class.java)
+            val intent = Intent(/* packageContext = */ this@MainActivity, /* cls = */ SignUpViewActivity::class.java)
             startActivity(intent)
         }
     }
