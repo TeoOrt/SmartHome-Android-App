@@ -1,0 +1,79 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+
+
+
+        <LinearLayout
+            android:id="@+id/init_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cadet"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp">
+
+
+            <Button
+                android:id="@+id/open_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/cadet"
+                android:text="@string/Create"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/cream"
+                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Recorded Times: 0"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/cream">
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="@string/action_settings"
+                android:textColor="@color/cream"
+
+                />
+
+                <Button
+                    android:id="@+id/recordVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Record Video"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/cream"
+                    android:textColor="@color/cadet"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+</merge>
