@@ -1,6 +1,8 @@
 package com.example.smart_home
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -28,6 +30,7 @@ class ListItem @JvmOverloads constructor(
     private val layout: LinearLayout
     private val expandButton: Button
     private val recordVideo : Button
+    private lateinit var nextActivity: Activity
 
     var titleText : CharSequence
         get() = expandButton.text
@@ -65,6 +68,9 @@ class ListItem @JvmOverloads constructor(
 
     }
 
+    fun getNextActivityButton():Button{
+        return this.recordVideo
+    }
     private fun toggleVisibility(state:Int): Int {
         return if(state == VISIBLE) GONE else VISIBLE
     }

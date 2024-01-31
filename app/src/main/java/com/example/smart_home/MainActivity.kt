@@ -1,6 +1,7 @@
 package com.example.smart_home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -12,17 +13,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.example.smart_home.R.layout.activity_main
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     //private variables
     private lateinit var listIds: MutableList<ListItemStruct>
-
+    private val linkMap = HashMap<Uri, ListItemStruct>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(activity_main)
         setInitialScreen()
+        for (ids in listIds){
+            setNextActivity(ids.itemView)
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            fetchVideoData()
+        }
     }
 
 
@@ -50,8 +61,39 @@ class MainActivity : AppCompatActivity() {
 
             )
 
+
+    }
+    private suspend fun fetchVideoData() = withContext(Dispatchers.IO){
+        val uri_path = "http://192.168.0.203:8080/get_expert/video/" //my home server address
+
+        val mp4Path_list= arrayOf<String>("H-0","H-1","H-2","H-3","H-4","H-5","H-6",
+                                          "H-7","H-8","H-9","H-DecreaseFanSpeed",
+                                          "H-IncreaseFanSpeed","H-FanOn","H-FanOff",
+                                          "H-LightOn","H-LightOff",
+                                          "H-SetThermo")
+        var index = 0
+
+        mp4Path_list.forEach {
+            val uri = Uri.parse("$uri_path$it.mp4")
+            linkMap[uri] = listIds[index]
+            index+=1
+        }
+
+        withContext(Dispatchers.Main){
+            Toast.makeText(this@MainActivity,"Size of mp4 ${mp4Path_list.size} and size of listIds is ${listIds.size}", Toast.LENGTH_LONG).show()
+        }
     }
 
+    private fun setNextActivity(listItem:ListItem){
+        val button = listItem.getNextActivityButton()
+        button.setOnClickListener {
+            val intent = Intent(this@MainActivity,VideoPlayer::class.java)
+            intent.putExtra("URI",linkMap[])
+
+            startActivity(Intent(this@MainActivity,VideoPlayer::class.java))
+        }
+
+    }
 
 
 
@@ -60,8 +102,7 @@ class MainActivity : AppCompatActivity() {
         private var titleText : CharSequence = titleText
         private var inputText: CharSequence = inputText
         var itemId : Int? = null
-        private val itemView = findViewById<ListItem>(itemId)
-
+        val itemView:ListItem = findViewById<ListItem>(itemId)
 
         init {
 

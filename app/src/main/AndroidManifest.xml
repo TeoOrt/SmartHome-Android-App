@@ -21,6 +21,11 @@
         android:theme="@style/Theme.Smart_home"
         tools:targetApi="31">
         <activity
+            android:name=".VideoPlayer"
+            android:exported="false"
+            android:label="@string/title_activity_video_player"
+            android:theme="@style/Theme.Smart_home" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
