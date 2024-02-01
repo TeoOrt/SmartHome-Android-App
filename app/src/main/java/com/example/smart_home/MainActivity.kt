@@ -3,12 +3,15 @@ package com.example.smart_home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -17,23 +20,30 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.URI
+import android.Manifest
+
 
 class MainActivity : AppCompatActivity() {
 
     //private variables
     private lateinit var listIds: MutableList<ListItemStruct>
-    private val linkMap = HashMap<Uri, ListItemStruct>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(activity_main)
         setInitialScreen()
-        for (ids in listIds){
-            setNextActivity(ids.itemView)
-        }
+        fetchVideoData()
+
+
         CoroutineScope(Dispatchers.Main).launch {
-            fetchVideoData()
+            for (ids in listIds){
+                setNextActivity(ids)
+            }
         }
+
     }
 
 
@@ -41,8 +51,8 @@ class MainActivity : AppCompatActivity() {
     /// This is useful for keeping track of all the id's
     private fun setInitialScreen(){
         listIds = mutableListOf<ListItemStruct>(
-            ListItemStruct("Show One time","Record a video to show how you would do a one time", R.id.CountOne),
             ListItemStruct("Show Zero times","Record a video to show how you would do a zero times",R.id.CountZero),
+            ListItemStruct("Show One time","Record a video to show how you would do a one time", R.id.CountOne),
             ListItemStruct("Show Two times","Record a video to show how you would do a two times", R.id.CountTwo),
             ListItemStruct("Show Three time","Record a video to show how you would do a three times", R.id.CountThree),
             ListItemStruct("Show Four time","Record a video to show how you would do a four times", R.id.CountFour),
@@ -63,46 +73,44 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    private suspend fun fetchVideoData() = withContext(Dispatchers.IO){
-        val uri_path = "http://192.168.0.203:8080/get_expert/video/" //my home server address
+    private  fun fetchVideoData() {
+        val uriPath = "http://192.168.0.203:8080/get_expert/video/" //my home server address
 
-        val mp4Path_list= arrayOf<String>("H-0","H-1","H-2","H-3","H-4","H-5","H-6",
+        val mp4PathList= arrayOf<String>("H-0","H-1","H-2","H-3","H-4","H-5","H-6",
                                           "H-7","H-8","H-9","H-DecreaseFanSpeed",
                                           "H-IncreaseFanSpeed","H-FanOn","H-FanOff",
                                           "H-LightOn","H-LightOff",
                                           "H-SetThermo")
         var index = 0
 
-        mp4Path_list.forEach {
-            val uri = Uri.parse("$uri_path$it.mp4")
-            linkMap[uri] = listIds[index]
-            index+=1
+        mp4PathList.forEach {
+            val uri = "$uriPath$it.mp4"
+            listIds[index].uri= uri
+            index +=1
         }
 
-        withContext(Dispatchers.Main){
-            Toast.makeText(this@MainActivity,"Size of mp4 ${mp4Path_list.size} and size of listIds is ${listIds.size}", Toast.LENGTH_LONG).show()
-        }
     }
 
-    private fun setNextActivity(listItem:ListItem){
-        val button = listItem.getNextActivityButton()
+    private suspend fun setNextActivity(listItem:ListItemStruct)= withContext(Dispatchers.Main){
+        val button = listItem.itemView.getNextActivityButton()
         button.setOnClickListener {
             val intent = Intent(this@MainActivity,VideoPlayer::class.java)
-            intent.putExtra("URI",linkMap[])
+            intent.data = Uri.parse(listItem.uri)
+            intent.putExtra("Title",listItem.titleText)
+            Toast.makeText(this@MainActivity, intent.getStringExtra("Title"), Toast.LENGTH_SHORT).show()
 
-            startActivity(Intent(this@MainActivity,VideoPlayer::class.java))
+            startActivity(intent)
         }
-
-    }
+      }
 
 
 
 
     inner class ListItemStruct(titleText: CharSequence, inputText: CharSequence,itemId:Int) {
-        private var titleText : CharSequence = titleText
-        private var inputText: CharSequence = inputText
         var itemId : Int? = null
         val itemView:ListItem = findViewById<ListItem>(itemId)
+        var uri: String? = null
+        var titleText: CharSequence? = titleText
 
         init {
 
@@ -111,8 +119,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
 
 
 }
