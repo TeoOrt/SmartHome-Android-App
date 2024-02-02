@@ -31,7 +31,7 @@ class VideoPlayer : AppCompatActivity() {
 
         title.text = intent.getStringExtra("Title")
         playButton.setOnClickListener {
-            onButtonClick(it)
+            onStartVid(it)
         }
 
         recordVideo.setOnClickListener {
@@ -40,13 +40,19 @@ class VideoPlayer : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        playButton.text = "Start"
+    }
+
+
     private fun onNextScreen(v: View?){
         val intent = Intent(this@VideoPlayer,CameraTaking::class.java)
         intent.putExtra("Title",vid_title)
         startActivity(intent)
     }
 
-    private fun onButtonClick(v: View?){
+    private fun onStartVid(v: View?){
         if (playButton.text == "Replay"){
             videoViewPlayer.start()
             return
