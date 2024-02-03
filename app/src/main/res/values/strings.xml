@@ -147,5 +147,6 @@
     </string>
     <string name="play">Play</string>
     <string name="record_video">Record Video</string>
+    <string name="return_home">Return Home</string>
 
 </resources>

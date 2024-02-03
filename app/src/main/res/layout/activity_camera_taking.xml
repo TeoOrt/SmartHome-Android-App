@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cadet"
     tools:context=".CameraTaking">
 
     <LinearLayout
@@ -14,25 +15,34 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Hello World"/>
+            android:text="Recording Training Video"
+            android:layout_marginTop="20dp"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/cream"
+            android:layout_marginBottom="50dp"
+            />
 
-        
+
         <androidx.camera.view.PreviewView
             android:id="@+id/CameraID"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+            android:layout_height="650dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible"
+             />
 
-    <Button
+
+        <Button
         android:id="@+id/Record_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/return_home"
         />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Hello World"/>
+
 
     </LinearLayout>
 

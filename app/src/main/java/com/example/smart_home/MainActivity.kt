@@ -3,25 +3,13 @@ package com.example.smart_home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.view.View.GONE
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import com.example.smart_home.R.layout.activity_main
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.URI
-import android.Manifest
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     /// Sets the text for the first screen
     /// This is useful for keeping track of all the id's
     private fun setInitialScreen(){
-        listIds = mutableListOf<ListItemStruct>(
+        listIds = mutableListOf(
             ListItemStruct("Show Zero times","Record a video to show how you would do a zero times",R.id.CountZero),
             ListItemStruct("Show One time","Record a video to show how you would do a one time", R.id.CountOne),
             ListItemStruct("Show Two times","Record a video to show how you would do a two times", R.id.CountTwo),
@@ -67,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             ListItemStruct("Show Fan Off","Record a video to show how you would turn a fan off", R.id.FanOff),
             ListItemStruct("Show Light On","Record a video to show how you would turn a light on", R.id.LightOn),
             ListItemStruct("Show Light Off","Record a video to show how you would turn a light off", R.id.LightOff),
-            ListItemStruct("Set Temperature","Record a video to show how you would set the tempeurate", R.id.Temperature),
+            ListItemStruct("Set Temperature","Record a video to show how you would set the temperature", R.id.Temperature),
 
             )
 
@@ -76,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     private  fun fetchVideoData() {
         val uriPath = "http://192.168.0.203:8080/get_expert/video/" //my home server address
 
-        val mp4PathList= arrayOf<String>("H-0","H-1","H-2","H-3","H-4","H-5","H-6",
+        val mp4PathList= arrayOf("H-0","H-1","H-2","H-3","H-4","H-5","H-6",
                                           "H-7","H-8","H-9","H-DecreaseFanSpeed",
                                           "H-IncreaseFanSpeed","H-FanOn","H-FanOff",
                                           "H-LightOn","H-LightOff",
@@ -107,8 +95,7 @@ class MainActivity : AppCompatActivity() {
 
 
     inner class ListItemStruct(titleText: CharSequence, inputText: CharSequence,itemId:Int) {
-        var itemId : Int? = null
-        val itemView:ListItem = findViewById<ListItem>(itemId)
+        val itemView:ListItem = findViewById(itemId)
         var uri: String? = null
         var titleText: CharSequence? = titleText
 
