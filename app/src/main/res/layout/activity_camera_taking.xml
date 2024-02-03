@@ -14,34 +14,52 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="Recording Training Video"
-            android:layout_marginTop="20dp"
             android:textSize="40sp"
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/cream"
-            android:layout_marginBottom="50dp"
+            android:paddingTop="10dp"
+            android:background="@color/night"
             />
 
 
         <androidx.camera.view.PreviewView
             android:id="@+id/CameraID"
             android:layout_width="match_parent"
-            android:layout_height="650dp"
+            android:layout_height="600dp"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
             android:visibility="visible"
+            android:backgroundTint="@color/gray"
              />
 
 
         <Button
-        android:id="@+id/Record_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/return_home"
-        />
+            android:id="@+id/Upload_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Video"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/Record_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/night"
+            android:text="@string/record_video"
+            android:visibility="visible"
+            />
+        <Button
+            android:id="@+id/ReturnHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/cadet"
+            android:text="@string/return_home"
+            />
+
 
 
     </LinearLayout>

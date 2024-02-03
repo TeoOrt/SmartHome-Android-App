@@ -1,5 +1,6 @@
 package com.example.smart_home
 import android.content.Intent
+import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,12 +8,14 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
+import androidx.camera.core.impl.SessionConfig.ErrorListener
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.URL
 import java.util.concurrent.ExecutionException
 
 
@@ -23,27 +26,32 @@ class VideoPlayer : AppCompatActivity() {
     private lateinit var title:TextView
     private lateinit var recordVideo:Button
     private var uri: Uri? = null
+    private var uriLocal: Uri? =null
     private var vidTitle: String? = null
     private var playedVid = false
     private val scope = CoroutineScope(Dispatchers.Main)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_player)
-        uri =  intent.data
+
+
         videoViewPlayer = findViewById(R.id.VidView)
         playButton = findViewById(R.id.play_button)
         title = findViewById(R.id.TitleVid)
         recordVideo = findViewById(R.id.NextRecordVid)
 
+        val uriList = intent.getStringArrayExtra("Uris")
+        uri = Uri.parse(uriList?.get(0))
+        uriLocal = Uri.parse((uriList?.get(1)))
         title.text = intent.getStringExtra("Title")
         vidTitle=intent.getStringExtra("Title")
 
-            playButton.setOnClickListener {
+        playButton.setOnClickListener {
                 scope.launch {
                     onStartVid() }
 
             }
-            recordVideo.setOnClickListener {
+        recordVideo.setOnClickListener {
                 scope.launch {  onNextScreen()}
             }
 
@@ -85,7 +93,7 @@ class VideoPlayer : AppCompatActivity() {
             checkCameraUnbind()
             videoViewPlayer.stopPlayback()
             val intent = Intent(this@VideoPlayer,CameraTaking::class.java)
-//            intent.putExtra("Title",vidTitle)
+            intent.putExtra("Title",vidTitle)
             startActivity(intent)
             }
         else {
@@ -108,4 +116,6 @@ class VideoPlayer : AppCompatActivity() {
         playedVid = true
 
     }
+
+
 }

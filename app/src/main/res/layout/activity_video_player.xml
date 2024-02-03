@@ -17,21 +17,25 @@
             android:id="@+id/TitleVid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="30dp"
             android:text="@string/Email"
             android:textSize="34sp"
+            android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/cream"
             />
 
-    <VideoView
+
+        <VideoView
             android:id="@+id/VidView"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:layout_gravity="center"
             android:layout_margin="50dp"
-        android:backgroundTint="@color/cream"
-            />
-
-
+            android:backgroundTint="@color/cream"
+            android:clickable="false"
+            android:elevation="10dp"
+            android:foreground="@drawable/dropdown" />
 
         <Button
             android:text="@string/play"

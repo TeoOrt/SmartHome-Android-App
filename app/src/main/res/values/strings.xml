@@ -148,5 +148,7 @@
     <string name="play">Play</string>
     <string name="record_video">Record Video</string>
     <string name="return_home">Return Home</string>
+    <string name="welcome_user">Welcome User</string>
+    <string name="Description">Hello this app is to record gestures for the smart home app, click on the tabs to record the video make sure to allow all permission\'s for proper app functionality, this app requires the internet since it will get video\'s and upload your gestures to the cloud.</string>
 
 </resources>

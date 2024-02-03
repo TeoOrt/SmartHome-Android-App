@@ -15,13 +15,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:textColor="@color/cream"
-        android:text="Welcome User"
+        android:text="@string/welcome_user"
         />
 
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/Description"
+    android:textColor="@color/cream"
+    android:padding="20dp"
+    android:textStyle="normal"
+    android:textAlignment="center"
+    android:textFontWeight="500"
+    android:textSize="23sp"
 
+    />
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

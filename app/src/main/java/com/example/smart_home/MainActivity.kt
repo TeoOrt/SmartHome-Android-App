@@ -73,7 +73,8 @@ class MainActivity : AppCompatActivity() {
 
         mp4PathList.forEach {
             val uri = "$uriPath$it.mp4"
-            listIds[index].uri= uri
+            val uriLocal = "$it.mp4"
+            listIds[index].uri= arrayOf(uri,uriLocal)
             index +=1
         }
 
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         val button = listItem.itemView.getNextActivityButton()
         button.setOnClickListener {
             val intent = Intent(this@MainActivity,VideoPlayer::class.java)
-            intent.data = Uri.parse(listItem.uri)
+            intent.putExtra("Uris",listItem.uri)
             intent.putExtra("Title",listItem.titleText)
             Toast.makeText(this@MainActivity, intent.getStringExtra("Title"), Toast.LENGTH_SHORT).show()
 
@@ -96,11 +97,10 @@ class MainActivity : AppCompatActivity() {
 
     inner class ListItemStruct(titleText: CharSequence, inputText: CharSequence,itemId:Int) {
         val itemView:ListItem = findViewById(itemId)
-        var uri: String? = null
+        lateinit var uri: Array<String>
         var titleText: CharSequence? = titleText
 
         init {
-
             itemView.inputText = inputText
             itemView.titleText = titleText
         }
