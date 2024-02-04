@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         mp4PathList.forEach {
             val uri = "$uriPath$it.mp4"
-            val uriLocal = "$it.mp4"
+            val uriLocal = "$it.mp4" //tried to access local files but it was eaiser to use http
             listIds[index].uri= arrayOf(uri,uriLocal)
             index +=1
         }

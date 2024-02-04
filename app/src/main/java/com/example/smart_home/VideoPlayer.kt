@@ -46,6 +46,8 @@ class VideoPlayer : AppCompatActivity() {
         title.text = intent.getStringExtra("Title")
         vidTitle=intent.getStringExtra("Title")
 
+
+        videoViewPlayer.setVideoURI(uri) // http golang server this wont work if server is not running
         playButton.setOnClickListener {
                 scope.launch {
                     onStartVid() }
@@ -107,8 +109,6 @@ class VideoPlayer : AppCompatActivity() {
             videoViewPlayer.start()
             return@withContext
         }
-
-        videoViewPlayer.setVideoURI(uri) // http golang server this wont work if server is not running
         videoViewPlayer.start()
         playButton.text = buildString {
             append("Replay")
