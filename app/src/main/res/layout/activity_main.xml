@@ -85,7 +85,6 @@
         app:cardElevation="15dp"
         app:cardBackgroundColor="@color/cadet"
         android:background="@color/cadet"
-        app:contentPadding="20dp"
         />
 
         <com.example.smart_home.ListItem
@@ -133,7 +132,6 @@
             app:cardElevation="15dp"
             app:cardBackgroundColor="@color/cadet"
             android:background="@color/cadet"
-            app:contentPadding="20dp"
             />
 
         <com.example.smart_home.ListItem
@@ -243,8 +241,7 @@
             app:cardElevation="15dp"
             app:cardBackgroundColor="@color/cadet"
             android:background="@color/cadet"
-            app:contentPaddingBottom="50dp"
-            android:paddingTop="10dp"
+
 
             />
 

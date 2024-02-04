@@ -5,5 +5,5 @@ import java.io.File
 
 data class ListItemCounter(
     @SerializedName("title") val title: String?,
-    @SerializedName("number") val number: Int,
+    @SerializedName("counter") val number: Int,
 )

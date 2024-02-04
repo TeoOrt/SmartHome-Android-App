@@ -3,19 +3,24 @@ package com.example.smart_home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smart_home.R.layout.activity_main
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
 
     //private variables
     private lateinit var listIds: MutableList<ListItemStruct>
+    private val indexMap = HashMap<String,Int>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +36,41 @@ class MainActivity : AppCompatActivity() {
                 setNextActivity(ids)
             }
         }
-
     }
+
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(Dispatchers.IO).launch{
+            getTrialNumbers()
+        }
+    }
+
+    private suspend fun getTrialNumbers() = withContext(Dispatchers.IO){
+        val baseUrl ="http://192.168.0.203:8080/"
+        val api = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MyApi::class.java)
+        GlobalScope.launch(Dispatchers.IO){
+            val result = api.getAll()
+            if (result.isSuccessful) {
+                val body = result.body()
+                if (body != null) {
+                    val temp_map_converter = getMap()
+                    for (values in body){
+                        val title  = temp_map_converter[values.title]
+                        val id = indexMap[title]
+                        withContext(Dispatchers.Main){
+                            listIds[id!!].addRecord(values.number)
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
 
 
     /// Sets the text for the first screen
@@ -40,15 +78,15 @@ class MainActivity : AppCompatActivity() {
     private fun setInitialScreen(){
         listIds = mutableListOf(
             ListItemStruct("Show Zero times","Record a video to show how you would do a zero times",R.id.CountZero),
-            ListItemStruct("Show One time","Record a video to show how you would do a one time", R.id.CountOne),
+            ListItemStruct("Show One times","Record a video to show how you would do a one time", R.id.CountOne),
             ListItemStruct("Show Two times","Record a video to show how you would do a two times", R.id.CountTwo),
-            ListItemStruct("Show Three time","Record a video to show how you would do a three times", R.id.CountThree),
-            ListItemStruct("Show Four time","Record a video to show how you would do a four times", R.id.CountFour),
-            ListItemStruct("Show Five time","Record a video to show how you would do a five times", R.id.CountFive),
-            ListItemStruct("Show Six time","Record a video to show how you would do a six times", R.id.CountSix),
-            ListItemStruct("Show Seven time","Record a video to show how you would do a seven times", R.id.CountSeven),
-            ListItemStruct("Show Eight time","Record a video to show how you would do a eight times", R.id.CountEight),
-            ListItemStruct("Show Nine time","Record a video to show how you would do a nine times", R.id.CountNine),
+            ListItemStruct("Show Three times","Record a video to show how you would do a three times", R.id.CountThree),
+            ListItemStruct("Show Four times","Record a video to show how you would do a four times", R.id.CountFour),
+            ListItemStruct("Show Five times","Record a video to show how you would do a five times", R.id.CountFive),
+            ListItemStruct("Show Six times","Record a video to show how you would do a six times", R.id.CountSix),
+            ListItemStruct("Show Seven times","Record a video to show how you would do a seven times", R.id.CountSeven),
+            ListItemStruct("Show Eight times","Record a video to show how you would do a eight times", R.id.CountEight),
+            ListItemStruct("Show Nine times","Record a video to show how you would do a nine times", R.id.CountNine),
             ListItemStruct("Show Decrease Fan Speed","Record a video to show how you would decrease fan speed", R.id.DecFan),
             ListItemStruct("Show Increase Fan Speed","Record a video to show how you would increase fan speed", R.id.IncFan),
             ListItemStruct("Show Fan On","Record a video to show how you would turn a fan on", R.id.FanOn),
@@ -59,6 +97,9 @@ class MainActivity : AppCompatActivity() {
 
             )
 
+        for ((idx, ids) in listIds.withIndex()){
+               indexMap[ids.titleText.toString()] = idx
+        }
 
     }
     private  fun fetchVideoData() {
@@ -93,6 +134,29 @@ class MainActivity : AppCompatActivity() {
       }
 
 
+    private fun getMap():HashMap<String,String>{
+
+        val map =  HashMap<String,String>()
+        map.put( "H-0.mp4","Show Zero times")
+        map.put( "H-1.mp4","Show One times")
+        map.put( "H-2.mp4","Show Two times")
+        map.put( "H-3.mp4","Show Three times")
+        map.put( "H-4.mp4","Show Four times")
+        map.put( "H-5.mp4","Show Five times")
+        map.put( "H-6.mp4","Show Six times")
+        map.put( "H-7.mp4","Show Seven times")
+        map.put( "H-8.mp4","Show Eight times")
+        map.put( "H-9.mp4","Show Nine times")
+        map.put( "H-DecreaseFanSpeed.mp4","Show Decrease Fan Speed")
+        map.put( "H-IncreaseFanSpeed.mp4","Show Increase Fan Speed")
+        map.put( "H-FanOn.mp4","Show Fan On")
+        map.put( "H-FanOff.mp4","Show Fan Off")
+        map.put( "H-LightOn.mp4","Show Light On")
+        map.put( "H-LightOff.mp4","Show Light Off")
+        map.put( "H-SetThermo.mp4","Set Temperature")
+        return map
+    }
+
 
 
     inner class ListItemStruct(titleText: CharSequence, inputText: CharSequence,itemId:Int) {
@@ -100,9 +164,15 @@ class MainActivity : AppCompatActivity() {
         lateinit var uri: Array<String>
         var titleText: CharSequence? = titleText
 
+
         init {
             itemView.inputText = inputText
             itemView.titleText = titleText
+        }
+
+        fun addRecord(trialNumber:Int){
+            val trialString = trialNumber.toString()
+            itemView.recorded = trialString
         }
 
     }

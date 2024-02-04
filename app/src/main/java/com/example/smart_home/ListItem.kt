@@ -19,6 +19,7 @@ class ListItem @JvmOverloads constructor(
 ) : CardView(context, attrs, defStyleAttr) {
 
     private val detailText: TextView
+    private val trialNumber : TextView
     private val layout: LinearLayout
     private val expandButton: Button
     private val recordVideo : Button
@@ -29,7 +30,12 @@ class ListItem @JvmOverloads constructor(
         set(value) {
             this.expandButton.text=value
         }
-
+    var recorded : CharSequence
+        get() = trialNumber.text
+        set(value){ // must be a number
+            val temp = "Recorded Times :${value}"
+            this.trialNumber.text = temp
+        }
 
     var inputText : CharSequence
         get() = detailText.text
@@ -44,6 +50,7 @@ class ListItem @JvmOverloads constructor(
         layout = findViewById(R.id.init_layout)
         expandButton = findViewById(R.id.open_list)
         recordVideo = findViewById(R.id.recordVideo)
+        trialNumber = findViewById(R.id.CounterId)
 
         expandButton.setOnClickListener {
             expand()

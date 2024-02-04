@@ -21,7 +21,7 @@ interface MyApi {
         @Part file: MultipartBody.Part
     ): Response<ResponseBody>
 
-    @GET("/get_vid_amounts")
+    @GET("/get_counter")
     suspend fun getAll() : Response<List<ListItemCounter>>
 }
 
