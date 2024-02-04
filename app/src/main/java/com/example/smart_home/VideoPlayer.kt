@@ -1,6 +1,5 @@
 package com.example.smart_home
 import android.content.Intent
-import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,14 +7,12 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
-import androidx.camera.core.impl.SessionConfig.ErrorListener
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.URL
 import java.util.concurrent.ExecutionException
 
 
@@ -47,7 +44,6 @@ class VideoPlayer : AppCompatActivity() {
         vidTitle=intent.getStringExtra("Title")
 
 
-        videoViewPlayer.setVideoURI(uri) // http golang server this wont work if server is not running
         playButton.setOnClickListener {
                 scope.launch {
                     onStartVid() }
@@ -109,6 +105,7 @@ class VideoPlayer : AppCompatActivity() {
             videoViewPlayer.start()
             return@withContext
         }
+        videoViewPlayer.setVideoURI(uri) // http golang server this wont work if server is not running
         videoViewPlayer.start()
         playButton.text = buildString {
             append("Replay")

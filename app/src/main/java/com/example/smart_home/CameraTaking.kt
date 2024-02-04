@@ -2,6 +2,7 @@ package com.example.smart_home
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -26,15 +27,22 @@ import androidx.camera.view.PreviewView
 import androidx.cardview.widget.CardView
 import androidx.concurrent.futures.await
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
+
 import androidx.core.util.Consumer
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import java.net.URLEncoder
+import okhttp3.RequestBody
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.reflect.Field
 
 
 class CameraTaking : AppCompatActivity() {
@@ -63,7 +71,7 @@ class CameraTaking : AppCompatActivity() {
 
         initCameraFragment()
         IoScope.launch {
-            title = intent.getStringExtra("title").toString()
+            title = intent.getStringExtra("Title").toString()
             title = title.replace(' ', '_')
         }
         setButtons()
@@ -95,13 +103,48 @@ class CameraTaking : AppCompatActivity() {
         }
         uploadButton.setOnClickListener {
             IoScope.launch {
-                UploadVideo()
+                uploadVideo()
             }
         }
     }
 
-    private suspend fun UploadVideo(){
-        val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("type",title).
+    private suspend fun uploadVideo(){
+        val baseUrl ="http://192.168.0.203:8080/"
+        val api = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MyApi::class.java)
+        val file = uploadUri?.toFile(this@CameraTaking)
+
+
+        Log.e("Upload","This is the filee  ${file.toString()}")
+        val titleRequestBody = RequestBody.create(MultipartBody.FORM,"Ortega")
+        val nameRequestBody = RequestBody.create(MultipartBody.FORM,title)
+        val fileRequestBody = file?.let { RequestBody.create(MultipartBody.FORM, it) }
+        val filePart =
+            fileRequestBody?.let { MultipartBody.Part.createFormData("file_field", file.name, it) }
+
+
+
+        IoScope.launch(Dispatchers.IO){
+                val res = filePart?.let { api.postVideos(titleRequestBody,nameRequestBody, it) }
+                withContext(Dispatchers.Main){
+                    if (res != null) {
+                        if(res.isSuccessful){
+                            Log.d("YES","Video uploaded succesfully")
+                            Toast.makeText(this@CameraTaking, "Video Succesfully Uploaded going back to Home...", Toast.LENGTH_SHORT).show()
+                            Thread.sleep(500)
+                            val intent  = Intent(this@CameraTaking,MainActivity::class.java)
+                            startActivity(intent)
+                        }else{
+                            Toast.makeText(this@CameraTaking,"Video failed to upload, check connection...",Toast.LENGTH_SHORT).show()
+                            Log.e("Error Http","$res.message()")
+                        }
+                    }
+            }
+
+        }
     }
 
     private suspend fun bindCaptureUse() = withContext(Dispatchers.IO) {
@@ -109,7 +152,7 @@ class CameraTaking : AppCompatActivity() {
 
         val cameraProvider = ProcessCameraProvider.getInstance(this@CameraTaking).await()
         val cameraSelector = CameraSelector.Builder().requireLensFacing(frontCamera).build()
-        val quality = Quality.HD
+        val quality = Quality.LOWEST
         val recorder = Recorder.Builder().setQualitySelector(QualitySelector.from(quality))
             .build()
         videoCapture = VideoCapture.withOutput(recorder)
@@ -167,12 +210,25 @@ class CameraTaking : AppCompatActivity() {
         }
 
     }
-    /*
-    *  Calculate aspectRatio for recording
-    *
-    * */
 
 
+    //Helper function
+    fun Uri.toFile(context: Context):File?{
+        val contentResolver  = context.contentResolver
+        return try{
+            val inputStream = contentResolver.openInputStream(this)
+            inputStream?.use {input->
+                val file = File.createTempFile( "{$title}_${trialNumber}_ORTEGA",".mp4",context.cacheDir)
+                FileOutputStream(file).use {
+                    input.copyTo(it)
+                }
+                file
+            }
+        }catch (e:Exception){
+            Log.e("UriToFile","Could not get file ${e.message}")
+            null
+        }
+    }
 
 
     /*
