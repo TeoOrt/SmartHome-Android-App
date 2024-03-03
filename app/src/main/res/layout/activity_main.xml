@@ -4,102 +4,253 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:background="@color/cadet"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gunmetal"
+    android:gravity="center"
     android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/imageView"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_margin="30dp"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/cream"
+        android:text="@string/welcome_user"
+        />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/Description"
+    android:textColor="@color/cream"
+    android:padding="20dp"
+    android:textStyle="normal"
+    android:textAlignment="center"
+    android:textFontWeight="500"
+    android:textSize="23sp"
+
+    />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountZero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/cadet"
+            app:cardBackgroundColor="@color/cadet"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:contentPadding="20dp" />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+        />
+
+    <com.example.smart_home.ListItem
+        android:id="@+id/CountTwo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="16dp">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="15dp"
+        app:cardBackgroundColor="@color/cadet"
+        android:background="@color/cadet"
+        app:contentPadding="20dp"
+        />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.example.smart_home.ListItem
+        android:id="@+id/CountThree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="15dp"
+        app:cardBackgroundColor="@color/cadet"
+        android:background="@color/cadet"
+        />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountFour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:textColorHint="@color/cadet"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
-                android:padding="20dp"
-                android:textColor="@color/cream" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountFive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_email">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_password"
-                android:inputType="textPassword"
-                android:padding="20dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_login"
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountSix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/login"
-            android:textColor="@color/cream"
-            app:backgroundTint="@color/cadet"
-            app:cornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_password" />
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_register"
-            android:layout_width="wrap_content"
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountSeven"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="154dp"
-            android:layout_marginTop="364dp"
-            android:layout_marginEnd="140dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/transparent"
-            android:text="@string/signup"
-            android:textAllCaps="false"
-            app:backgroundTint="@color/cadet"
-            app:cornerRadius="100dp"
-            app:iconTint="@color/cream"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:strokeColor="@color/gray" />
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountEight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/CountNine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/DecFan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            android:paddingEnd="10dp"
+            app:contentPaddingBottom="30dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/IncFan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            android:paddingEnd="10dp"
+            app:contentPaddingBottom="30dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/FanOff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/FanOn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/LightOn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/LightOff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+            app:contentPadding="20dp"
+            />
+
+        <com.example.smart_home.ListItem
+            android:id="@+id/Temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="15dp"
+            app:cardBackgroundColor="@color/cadet"
+            android:background="@color/cadet"
+
+
+            />
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>
 
 </LinearLayout>
+
